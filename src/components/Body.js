@@ -2,6 +2,8 @@ import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer.js";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus.js";
+
 
 const Body = () => {
   // Local State Variable - Super powerful variable
@@ -29,6 +31,12 @@ const Body = () => {
     setFilteredRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   };
 
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false)
+    return(
+      <h1>NETWORK CONNECTION FAILED</h1>
+    );
+    
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
